@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>loadingScreen</title>
+
+    <style>
+        @font-face {
+            font-family: 'Invisible-ExtraBold';
+            src: url('Invisible-ExtraBold.otf') format('opentype');
+            
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            height: 100vh;
+            position: relative;
+        }
+
+        .loader {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background-color: #7563634d;
+        }
+
+        .progress {
+            height: 100%;
+            width: 0;
+            background-color: #00ff00;
+            transition: width 0.5s ease-in-out;
+        }
+
+        .bottom-left {
+            position: absolute;
+            bottom: 15px;
+            left: 10px;
+            display: flex;
+            align-items: center;
+            z-index: 1;
+        }
+
+        .logo {
+            width: 58px;
+            height: 58px;
+            left: 7.5%;
+            margin-right: 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .spinner {
+            width: 60px;
+            height: 60px;
+            left: -18.5%;
+            position: relative;
+            animation: spin 5s linear infinite;
+            z-index: 1;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .fade-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 2s ease-in-out;
+            z-index: -1;
+        }
+
+        .fade-image.active {
+            opacity: 1;
+        }
+        
+        .bottom-left span {
+            color: #fff;
+            font-family: 'Invisible-ExtraBold', sans-serif;
+            text-shadow: 1px 3px 4px rgba(0, 0, 0, 1);
+            font-size: 30px;
+            margin-left: -30px;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="bottom-left">
+        <img class="logo" src="ACCLogosin_gear.png" alt="Logo">
+        <img class="spinner" src="gearop.png" alt="Spinner">
+        <span>Zona Creators</span>
+    </div> 
+    
+
+    <div class="loader">
+        <div class="progress"></div>
+    </div>
+
+    <div class="fade-images">
+        <img class="fade-image active" src="imagenes/1.jpg" alt="Image 1">
+        <img class="fade-image" src="imagenes/2.jpg" alt="Image 2">
+        <img class="fade-image" src="imagenes/3.jpg" alt="Image 3">
+        <img class="fade-image" src="imagenes/4.jpg" alt="Image 4">
+        <img class="fade-image" src="imagenes/5.jpg" alt="Image 5">
+        <img class="fade-image" src="imagenes/6.jpg" alt="Image 6">
+        <img class="fade-image" src="imagenes/7.jpg" alt="Image 7">
+        <img class="fade-image" src="imagenes/8.jpg" alt="Image 8">
+        <img class="fade-image" src="imagenes/9.jpg" alt="Image 9">
+        <img class="fade-image" src="imagenes/10.jpg" alt="Image 10">
+        <img class="fade-image" src="imagenes/11.jpg" alt="Image 11">
+        <img class="fade-image" src="imagenes/12.jpg" alt="Image 12">
+        <!-- Resto de las imágenes -->
+    </div>
+
+    <script>
+        window.addEventListener("load", function() {
+            var images = document.querySelectorAll(".fade-image");
+            var index = 0;
+            var previousIndex = -1;
+
+            function getRandomIndex() {
+                var randomIndex = Math.floor(Math.random() * images.length);
+                if (randomIndex !== previousIndex) {
+                    previousIndex = randomIndex;
+                    return randomIndex;
+                } else {
+                    return getRandomIndex();
+                }
+            }
+
+            var progress = document.querySelector(".progress");
+            var fadeInterval = setInterval(function() {
+                images[index].classList.remove("active");
+                index = getRandomIndex();
+                images[index].classList.add("active");
+
+                var percentage = ((index + 1) / images.length) * 100;
+                progress.style.width = percentage + "%";
+            }, 5000);
+        });
+    </script>
+</body>
+</html>
